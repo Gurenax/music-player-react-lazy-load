@@ -4,3 +4,22 @@ GET http://localhost:7000/artists
 GET http://localhost:7000/songs
 ### ALL GENRE
 GET http://localhost:7000/genres
+
+### REGISTRATION
+POST http://localhost:7000/auth/register
+Content-Type: application/json
+
+{
+  "email": "glenn.dimaliwat@gmail.com",
+  "firstName": "Glenn",
+  "lastName" : "Dimaliwat",
+  "password" : "password123"
+}
+### SIGN IN
+POST http://localhost:7000/auth/
+Content-Type: application/json
+
+{
+  "email": "glenn.dimaliwat@gmail.com",
+  "password" : "password123"
+}
