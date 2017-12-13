@@ -1,12 +1,9 @@
 import React from 'react'
 
-import List, {
-  ListItem,
-  ListItemAvatar,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-} from 'material-ui/List';
+import ArtistItem from './ArtistItem'
+
+import Grid from 'material-ui/Grid'
+import List, { ListSubheader } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
 import FolderIcon from 'material-ui-icons/Folder';
@@ -16,28 +13,13 @@ const ArtistList = ({
   artists
 }) => {
   return (
-    <div>
-      <List dense={false}>
+    <Grid container xs>
+      <List dense={false} subheader={<ListSubheader>Artists</ListSubheader>}>
         {!!artists && artists.map( artist => (
-          <ListItem button>
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={artist.name}
-              secondary={artist.bio}
-            />
-            <ListItemSecondaryAction>
-              <IconButton aria-label="Delete">
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <ArtistItem artist={artist.name} bio={artist.bio} />
         ))}
       </List>
-    </div>
+    </Grid>
   )
 }
 
