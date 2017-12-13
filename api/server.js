@@ -1,10 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const server = express()
 
 // Middleware Plugins
 server.use(bodyParser.json())
+
+// Cross-Origin Resource Sharing
+server.use(cors())
 
 // Routes
 server.use('/', [
