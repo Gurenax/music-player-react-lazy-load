@@ -12,7 +12,6 @@ Artist.create(
   .then(artist => {
     console.log('Created artist', artist)
     
-    console.log('artist id', artist._id)
     Song.create(
       {
         title: 'Perfect Duet',
@@ -65,16 +64,4 @@ Artist.create(
   })
   .catch(error => {
     console.error('Error creating artist', error)
-  })
-
-Genre.create(
-  {
-    name: 'Pop',
-  }
-)
-  .then(genre => {
-    console.log('Created genre', genre)
-  })
-  .catch(error => {
-    console.error('Error creating genre', error)
   })
