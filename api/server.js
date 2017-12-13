@@ -8,7 +8,9 @@ server.use(bodyParser.json())
 
 // Routes
 server.use('/', [
-  // require('./routes/whatever')
+  require('./routes/artist.js'),
+  require('./routes/song.js'),
+  require('./routes/genre.js')
 ])
 
 // Start the server

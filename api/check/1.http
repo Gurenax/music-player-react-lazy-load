@@ -1,0 +1,6 @@
+### ALL ARTISTS
+GET http://localhost:7000/artists
+### ALL SONGS
+GET http://localhost:7000/songs
+### ALL GENRE
+GET http://localhost:7000/genres
