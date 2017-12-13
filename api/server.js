@@ -8,6 +8,7 @@ server.use(bodyParser.json())
 
 // Routes
 server.use('/', [
+  require('./routes/auth'),
   require('./routes/artist.js'),
   require('./routes/song.js'),
   require('./routes/genre.js')
