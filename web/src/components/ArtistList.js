@@ -14,7 +14,7 @@ const ArtistList = ({
 }) => {
   return (
     <Grid container xs>
-      <List dense={false} subheader={<ListSubheader>Artists</ListSubheader>}>
+      <List dense={false} subheader={!!artists && <ListSubheader>Artists</ListSubheader>}>
         {!!artists && artists.map( artist => (
           <ArtistItem artist={artist.name} bio={artist.bio} />
         ))}
