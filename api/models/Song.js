@@ -6,9 +6,9 @@ const songSchema = new Schema({
   lyrics: { type: String, required : true },  // e.g. I found a love / For me / Oh darling, just dive right in
   artist: { type: Schema.ObjectId, ref: 'Artist', required: true }, // e.g. Ed Sheeran
   featArtist: [{ type: Schema.ObjectId, ref: 'Artist', default: [] }], // e.g. Beyonce
-  genre: [{ type: Schema.ObjectId, ref: 'Genre', default: [] }] // e.g. Pop
+  genres: [{ type: Schema.ObjectId, ref: 'Genre', default: [] }] // e.g. Pop
 })
 
-const Artist = mongoose.model('Artist', songSchema)
+const Song = mongoose.model('Song', songSchema)
 
-module.exports = Artist
+module.exports = Song
