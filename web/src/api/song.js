@@ -9,6 +9,18 @@ export const listSongs = () => {
     })
 }
 
+export const addSong = song => {
+  return api
+    .post('/songs', song)
+    .then(res => {
+      const newSong = res.data
+      return newSong
+    })
+    .catch(error => {
+      throw error
+    })
+}
+
 export const deleteSong = songId => {
   return api
     .delete(`/songs/${songId}`)
