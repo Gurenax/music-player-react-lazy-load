@@ -37,7 +37,14 @@ router.post('/songs', authMiddleware.requireJWT, (req, res) => {
   const attributes = req.body
   Song.create(attributes)
     .then(song => {
-      res.status(201).json(song)
+      Song.findOne(song)
+      .populate('artist','name')
+      .then(song => {
+        res.status(201).json(song)
+      })
+      .catch(error => {
+        res.status(400).json({ error: error })
+      })
     })
     .catch(error => {
       res.status(400).json({ error: error })
