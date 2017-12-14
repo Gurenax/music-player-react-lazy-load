@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 
 const styles = theme => ({
   root: {
@@ -12,15 +12,18 @@ const styles = theme => ({
   },
   card: {
     minWidth: 300,
+  },
+  button: {
+    marginTop: theme.spacing.unit,
   }
 })
 
-const ArtistForm = ({ classes, onArtistSave }) => {
+const ArtistForm = ({ classes, title, onArtistSave }) => {
   return (
     // <div className={classes.root}>
     <Card className={classes.card}>
       <CardContent>
-        <Typography type="subheading">Artist Form</Typography>
+        <Typography type="subheading">{ title }</Typography>
         <form
           onSubmit={event => {
             event.preventDefault()
@@ -48,7 +51,7 @@ const ArtistForm = ({ classes, onArtistSave }) => {
             margin="normal"
             fullWidth={true}
           />
-          <br />
+          
           <TextField
             name="bio"
             label="Biography"
@@ -58,11 +61,12 @@ const ArtistForm = ({ classes, onArtistSave }) => {
             margin="normal"
             fullWidth={true}
           />
-          <br />
+          
           <Button
             type="submit"
             raised
             color="primary"
+            className={classes.button}
           >
             Save Artist
           </Button>
