@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import './App.css'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
-import { listArtists } from './api/artist'
+import { listArtists, addArtist } from './api/artist'
 
 import SignInForm from './components/SignInForm'
 import Error from './components/Error'
 import ArtistList from './components/ArtistList'
+import ArtistForm from './components/ArtistForm'
 
 import AppBarTop from './components/AppBarTop'
 // import AppDrawer from './components/AppDrawer'
@@ -58,7 +59,6 @@ class App extends Component {
       error: null,
     })
   }
-
   
   toggleDrawer = (side, open) => () => {
     console.log('click')
@@ -66,6 +66,23 @@ class App extends Component {
     this.setState({
       [side]: open
     })
+  }
+
+  onArtistSave = data => {
+    addArtist(data)
+      .then(artist => {
+        this.setState( prevState => {
+          const artists = prevState.artists.concat(artist)
+          return {
+            artists,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        console.error(error)
+      })
+
   }
 
   render() {
@@ -82,6 +99,8 @@ class App extends Component {
         {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
 
         {!!signedIn && <ArtistList artists={this.dataForSection('artists')} />}
+        {!!signedIn && <ArtistForm onArtistSave={this.onArtistSave} />}
+        
       </div>
     )
   }

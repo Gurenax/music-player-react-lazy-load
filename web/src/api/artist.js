@@ -18,17 +18,17 @@ export const listArtists = () => {
 //     })
 // }
 
-// export const addArtist = artist => {
-//   return api
-//     .post('/artists', artist)
-//     .then(res => {
-//       const newArtist = res.data
-//       return newArtist
-//     })
-//     .catch(error => {
-//       throw error
-//     })
-// }
+export const addArtist = artist => {
+  return api
+    .post('/artists', artist)
+    .then(res => {
+      const newArtist = res.data
+      return newArtist
+    })
+    .catch(error => {
+      throw error
+    })
+}
 
 // export const updateProduct = product => {
 //   return api

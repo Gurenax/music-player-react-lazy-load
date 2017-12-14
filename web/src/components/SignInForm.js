@@ -3,7 +3,6 @@ import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Grid from 'material-ui/Grid';
 
-
 const SignInForm = ({ onSignIn }) => {
   return (
     <Grid container justify="center">
