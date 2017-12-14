@@ -3,13 +3,14 @@ import './App.css'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import { listArtists, addArtist, deleteArtist } from './api/artist'
-import { listSongs, deleteSong } from './api/song'
+import { listSongs, addSong, deleteSong } from './api/song'
 
 import SignInForm from './components/SignInForm'
 import Error from './components/Error'
 import ArtistList from './components/Artist/ArtistList'
 import ArtistForm from './components/Artist/ArtistForm'
 import SongList from './components/Song/SongList'
+import SongForm from './components/Song/SongForm'
 
 import AppBarTop from './components/AppBarTop'
 // import AppDrawer from './components/AppDrawer'
@@ -101,6 +102,23 @@ class App extends Component {
       })
   }
 
+  onSongSave = data => {
+    addSong(data)
+      .then(song => {
+        this.setState(prevState => {
+          const songs = prevState.songs.concat(song)
+          console.log(songs)
+          return {
+            songs,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
   onSongDelete = songID => {
     deleteSong(songID)
       .then(song => {
@@ -144,7 +162,9 @@ class App extends Component {
           />
         }
 
-        {!!signedIn && <ArtistForm onArtistSave={this.onArtistSave} />}
+        {!!signedIn && (
+          <ArtistForm title="New Artist" onArtistSave={this.onArtistSave} />
+        )}
 
         {
           <SongList
@@ -152,6 +172,14 @@ class App extends Component {
             onSongDelete={this.onSongDelete}
           />
         }
+
+        {!!signedIn && (
+          <SongForm
+            title="New Song"
+            artists={this.dataForSection('artists')}
+            onSongSave={this.onSongSave}
+          />
+        )}
       </div>
     )
   }
@@ -201,7 +229,6 @@ class App extends Component {
   }
 
   dataForSection(section) {
-    console.log('dataForSection', section)
     this.loadSection(section)
     return this.state[section]
   }
