@@ -3,11 +3,13 @@ import './App.css'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import { listArtists, addArtist, deleteArtist } from './api/artist'
+import { listSongs, deleteSong } from './api/song'
 
 import SignInForm from './components/SignInForm'
 import Error from './components/Error'
-import ArtistList from './components/ArtistList'
-import ArtistForm from './components/ArtistForm'
+import ArtistList from './components/Artist/ArtistList'
+import ArtistForm from './components/Artist/ArtistForm'
+import SongList from './components/Song/SongList'
 
 import AppBarTop from './components/AppBarTop'
 // import AppDrawer from './components/AppDrawer'
@@ -99,6 +101,24 @@ class App extends Component {
       })
   }
 
+  onSongDelete = songID => {
+    deleteSong(songID)
+      .then(song => {
+        this.setState(prevState => {
+          const songs = prevState.songs.filter(theSong => {
+            return theSong._id !== song._id
+          })
+          return {
+            songs,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
   render() {
     const { decodedToken, error, leftDrawer } = this.state
     const signedIn = !!decodedToken
@@ -125,6 +145,13 @@ class App extends Component {
         }
 
         {!!signedIn && <ArtistForm onArtistSave={this.onArtistSave} />}
+
+        {
+          <SongList
+            songs={this.dataForSection('songs')}
+            onSongDelete={this.onSongDelete}
+          />
+        }
       </div>
     )
   }
@@ -133,6 +160,10 @@ class App extends Component {
     artists: {
       requireAuth: false,
       load: listArtists
+    },
+    songs: {
+      requireAuth: false,
+      load: listSongs
     }
   }
 
