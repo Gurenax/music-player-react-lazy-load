@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
-import { listArtists, addArtist } from './api/artist'
+import { listArtists, addArtist, deleteArtist } from './api/artist'
 
 import SignInForm from './components/SignInForm'
 import Error from './components/Error'
@@ -77,7 +77,25 @@ class App extends Component {
         })
       })
       .catch(error => {
-        console.error(error)
+        this.setState({ error })
+      })
+  }
+
+  onArtistDelete = artistID => {
+    deleteArtist(artistID)
+      .then(artist => {
+        this.setState(prevState => {
+          const artists = prevState.artists.filter(theArtist => {
+            return theArtist._id !== artist._id
+          })
+          return {
+            artists,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
       })
   }
 
@@ -99,7 +117,12 @@ class App extends Component {
 
         {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
 
-        {<ArtistList artists={this.dataForSection('artists')} />}
+        {
+          <ArtistList
+            artists={this.dataForSection('artists')}
+            onArtistDelete={this.onArtistDelete}
+          />
+        }
 
         {!!signedIn && <ArtistForm onArtistSave={this.onArtistSave} />}
       </div>
@@ -152,9 +175,7 @@ class App extends Component {
     return this.state[section]
   }
 
-  componentDidUpdate() {
-
-  }
+  componentDidUpdate() {}
 }
 
 export default App

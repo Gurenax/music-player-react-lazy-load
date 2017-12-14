@@ -13,7 +13,8 @@ import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import DeleteIcon from 'material-ui-icons/Delete';
 
 const ArtistItem = ({
-  artist
+  artist,
+  onArtistDelete
 }) => (
   <ListItem button>
     <ListItemAvatar>
@@ -26,7 +27,7 @@ const ArtistItem = ({
       secondary={artist.bio}
     />
     <ListItemSecondaryAction>
-      <IconButton aria-label="Delete">
+      <IconButton aria-label="Delete" onClick={() => onArtistDelete(artist._id)} >
         <DeleteIcon />
       </IconButton>
     </ListItemSecondaryAction>

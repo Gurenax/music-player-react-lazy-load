@@ -6,14 +6,15 @@ import Grid from 'material-ui/Grid'
 import List, { ListSubheader } from 'material-ui/List';
 
 const ArtistList = ({
-  artists
+  artists,
+  onArtistDelete
 }) => {
   return (
     <div>
       {!!artists ? (
       <List dense={false} subheader={<ListSubheader>Artists</ListSubheader>}>
         {artists.map( artist => (
-          <ArtistItem key={artist._id} artist={artist} />
+          <ArtistItem key={artist._id} artist={artist} onArtistDelete={onArtistDelete} />
         ))}
       </List>
       ) : (

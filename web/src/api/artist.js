@@ -46,11 +46,11 @@ export const addArtist = artist => {
 //     })
 // }
 
-// export const deleteProduct = artistId => {
-//   return api
-//     .delete(`/artists/${artistId}`)
-//     .then(res => res.data)
-//     .catch(error => {
-//       this.setState({ error })
-//     })
-// }
+export const deleteArtist = artistId => {
+  return api
+    .delete(`/artists/${artistId}`)
+    .then(res => res.data)
+    .catch(error => {
+      throw error
+    })
+}

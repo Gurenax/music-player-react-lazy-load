@@ -10,14 +10,8 @@ const styles = theme => ({
   root: {
     width: '100%'
   },
-  container: {
-    // display: 'block'
-    // flexWrap: 'wrap',
-  },
-  field: {
-    // marginLeft: theme.spacing.unit,
-    // marginRight: theme.spacing.unit,
-    // minWidth: 300
+  card: {
+    minWidth: 300,
   }
 })
 
@@ -28,7 +22,6 @@ const ArtistForm = ({ classes, onArtistSave }) => {
       <CardContent>
         <Typography type="subheading">Artist Form</Typography>
         <form
-          className={classes.container}
           onSubmit={event => {
             event.preventDefault()
             const form = event.target
@@ -53,7 +46,6 @@ const ArtistForm = ({ classes, onArtistSave }) => {
             label="Name"
             placeholder="Enter name"
             margin="normal"
-            className={classes.field}
             fullWidth={true}
           />
           <br />
@@ -64,7 +56,6 @@ const ArtistForm = ({ classes, onArtistSave }) => {
             rows="4"
             rowsMax="4"
             margin="normal"
-            className={classes.field}
             fullWidth={true}
           />
           <br />
