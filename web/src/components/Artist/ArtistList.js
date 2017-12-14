@@ -2,7 +2,7 @@ import React from 'react'
 
 import ArtistItem from './ArtistItem'
 
-import Grid from 'material-ui/Grid'
+// import Grid from 'material-ui/Grid'
 import List, { ListSubheader } from 'material-ui/List';
 
 const ArtistList = ({
