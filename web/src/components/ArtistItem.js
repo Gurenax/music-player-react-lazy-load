@@ -2,7 +2,7 @@ import React from 'react'
 import {
   ListItem,
   ListItemAvatar,
-  ListItemIcon,
+  // ListItemIcon,
   ListItemSecondaryAction,
   ListItemText
 } from 'material-ui/List';
@@ -13,8 +13,7 @@ import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import DeleteIcon from 'material-ui-icons/Delete';
 
 const ArtistItem = ({
-  name,
-  bio
+  artist
 }) => (
   <ListItem button>
     <ListItemAvatar>
@@ -23,8 +22,8 @@ const ArtistItem = ({
       </Avatar>
     </ListItemAvatar>
     <ListItemText
-      primary={name}
-      secondary={bio}
+      primary={artist.name}
+      secondary={artist.bio}
     />
     <ListItemSecondaryAction>
       <IconButton aria-label="Delete">

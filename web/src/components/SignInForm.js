@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 
 const SignInForm = ({ onSignIn }) => {
   return (
-    <Grid container justify="center" xs>
+    <Grid container justify="center">
       <form
         onSubmit={event => {
           event.preventDefault()

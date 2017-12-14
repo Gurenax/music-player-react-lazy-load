@@ -8,9 +8,9 @@ import SignInForm from './components/SignInForm'
 import Error from './components/Error'
 import ArtistList from './components/ArtistList'
 
-import ButtonAppBar from './components/ButtonAppBar'
+import AppBarTop from './components/AppBarTop'
+// import AppDrawer from './components/AppDrawer'
 
-import AppBar from 'material-ui/AppBar'
 // import Grid from 'material-ui/Grid'
 // import Button from 'material-ui/Button'
 // import Typography from 'material-ui/Typography'
@@ -23,7 +23,8 @@ import AppBar from 'material-ui/AppBar'
 class App extends Component {
   state = {
     decodedToken: getDecodedToken(), // Sign In Data
-    error: null
+    error: null,
+    leftDrawer: false
   }
 
   onSignIn = ({ email, password }) => {
@@ -32,7 +33,7 @@ class App extends Component {
         this.setState({
           decodedToken,
           error: null,
-          products: null
+          artists: null
         })
       })
       .catch(error => {
@@ -55,33 +56,32 @@ class App extends Component {
     this.setState({
       decodedToken: null,
       error: null,
-      anchorEl: null,
     })
   }
 
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-
-  handleRequestClose = () => {
-    this.setState({ anchorEl: null })
+  
+  toggleDrawer = (side, open) => () => {
+    console.log('click')
+    console.log('toggleDrawer', side, open)
+    this.setState({
+      [side]: open
+    })
   }
 
   render() {
-    const { decodedToken, error, anchorEl } = this.state
-    const open = Boolean(anchorEl);
+    const { decodedToken, error, leftDrawer } = this.state
     const signedIn = !!decodedToken
     
+
     return (
       <div className="App">
-        <ButtonAppBar title="Music Player" signedIn={ signedIn } onSignOut={ this.onSignOut } />
-        
+        <AppBarTop title="Music Player" signedIn={ signedIn } onSignOut={ this.onSignOut } leftDrawer={ leftDrawer } toggleDrawer={ this.toggleDrawer } />
 
         {!!error && <Error error={error} />}
 
         {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
 
-        <ArtistList artists={this.dataForSection('artists')} />
+        {!!signedIn && <ArtistList artists={this.dataForSection('artists')} />}
       </div>
     )
   }
