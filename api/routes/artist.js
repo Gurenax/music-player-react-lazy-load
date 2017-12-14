@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth')
 const router = express.Router()
 
 // GET - Read all artists
-router.get('/artists', authMiddleware.requireJWT, (req, res) => {
+router.get('/artists', (req, res) => {
   Artist.find()
     .then(artists => {
       res.json(artists)
@@ -16,7 +16,7 @@ router.get('/artists', authMiddleware.requireJWT, (req, res) => {
 })
 
 // GET - Read an individual artist document
-router.get('/artists/:id', authMiddleware.requireJWT, (req, res) => {
+router.get('/artists/:id', (req, res) => {
   const id = req.params.id
   Artist.findById(id)
     .then(artist => {

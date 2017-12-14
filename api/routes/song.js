@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth')
 const router = express.Router()
 
 // GET - Read all songs
-router.get('/songs', authMiddleware.requireJWT, (req, res) => {
+router.get('/songs', (req, res) => {
   Song.find()
     .then(songs => {
       res.json(songs)
@@ -16,7 +16,7 @@ router.get('/songs', authMiddleware.requireJWT, (req, res) => {
 })
 
 // GET - Read an individual song document
-router.get('/songs/:id', authMiddleware.requireJWT, (req, res) => {
+router.get('/songs/:id', (req, res) => {
   const id = req.params.id
   Song.findById(id)
     .then(song => {

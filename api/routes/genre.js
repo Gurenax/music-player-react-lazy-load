@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth')
 const router = express.Router()
 
 // GET - Read all genres
-router.get('/genres', authMiddleware.requireJWT, (req, res) => {
+router.get('/genres', (req, res) => {
   Genre.find()
     .then(genres => {
       res.json(genres)
@@ -16,7 +16,7 @@ router.get('/genres', authMiddleware.requireJWT, (req, res) => {
 })
 
 // GET - Read an individual genre document
-router.get('/genres/:id', authMiddleware.requireJWT, (req, res) => {
+router.get('/genres/:id', (req, res) => {
   const id = req.params.id
   Genre.findById(id)
     .then(genre => {
