@@ -1,11 +1,26 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 import Grid from 'material-ui/Grid';
 
-const SignInForm = ({ onSignIn }) => {
+const styles = {
+  root: {
+    width: '100%',
+    textAlign: 'center'
+  },
+  field: {
+    minWidth: '300px'
+  }
+}
+
+const SignInForm = ({ 
+  classes,
+  onSignIn
+}) => {
   return (
-    <Grid container justify="center">
+    <div className={classes.root}>
       <form
         onSubmit={event => {
           event.preventDefault()
@@ -26,6 +41,7 @@ const SignInForm = ({ onSignIn }) => {
           label="E-mail"
           placeholder="Enter e-mail"
           margin="normal"
+          className={classes.field}
         /><br/>
         <TextField
           type="password"
@@ -33,13 +49,18 @@ const SignInForm = ({ onSignIn }) => {
           label="Password"
           placeholder="Enter password"
           margin="normal"
+          className={classes.field}
         /><br/>
         <Button type="submit" raised color="primary">
           Sign In
         </Button>
       </form>
-    </Grid>
+    </div>
   )
 }
 
-export default SignInForm
+SignInForm.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(SignInForm)

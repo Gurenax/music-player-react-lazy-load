@@ -9,13 +9,17 @@ const ArtistList = ({
   artists
 }) => {
   return (
-    <Grid container>
-      <List dense={false} subheader={!!artists && <ListSubheader>Artists</ListSubheader>}>
-        {!!artists && artists.map( artist => (
+    <div>
+      {!!artists ? (
+      <List dense={false} subheader={<ListSubheader>Artists</ListSubheader>}>
+        {artists.map( artist => (
           <ArtistItem key={artist._id} artist={artist} />
         ))}
       </List>
-    </Grid>
+      ) : (
+        <p>Loading artists...</p>
+      )}
+    </div>
   )
 }
 

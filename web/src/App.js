@@ -33,8 +33,7 @@ class App extends Component {
       .then(decodedToken => {
         this.setState({
           decodedToken,
-          error: null,
-          artists: null
+          error: null
         })
       })
       .catch(error => {
@@ -56,13 +55,11 @@ class App extends Component {
     signOutNow()
     this.setState({
       decodedToken: null,
-      error: null,
+      error: null
     })
   }
-  
+
   toggleDrawer = (side, open) => () => {
-    console.log('click')
-    console.log('toggleDrawer', side, open)
     this.setState({
       [side]: open
     })
@@ -71,7 +68,7 @@ class App extends Component {
   onArtistSave = data => {
     addArtist(data)
       .then(artist => {
-        this.setState( prevState => {
+        this.setState(prevState => {
           const artists = prevState.artists.concat(artist)
           return {
             artists,
@@ -82,39 +79,44 @@ class App extends Component {
       .catch(error => {
         console.error(error)
       })
-
   }
 
   render() {
     const { decodedToken, error, leftDrawer } = this.state
     const signedIn = !!decodedToken
-    
 
     return (
       <div className="App">
-        <AppBarTop title="Music Player" signedIn={ signedIn } onSignOut={ this.onSignOut } leftDrawer={ leftDrawer } toggleDrawer={ this.toggleDrawer } />
+        <AppBarTop
+          title="Music Player"
+          signedIn={signedIn}
+          onSignOut={this.onSignOut}
+          leftDrawer={leftDrawer}
+          toggleDrawer={this.toggleDrawer}
+        />
 
         {!!error && <Error error={error} />}
 
         {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
 
-        {!!signedIn && <ArtistList artists={this.dataForSection('artists')} />}
+        {<ArtistList artists={this.dataForSection('artists')} />}
+
         {!!signedIn && <ArtistForm onArtistSave={this.onArtistSave} />}
-        
       </div>
     )
   }
 
   sections = {
     artists: {
-      requireAuth: true,
+      requireAuth: false,
       load: listArtists
-    },
+    }
   }
 
   loadSection(section) {
     const { pending, requireAuth, load } = this.sections[section]
     // If already loading
+
     if (pending) {
       return
     }
@@ -145,8 +147,13 @@ class App extends Component {
   }
 
   dataForSection(section) {
+    console.log('dataForSection', section)
     this.loadSection(section)
     return this.state[section]
+  }
+
+  componentDidUpdate() {
+
   }
 }
 
