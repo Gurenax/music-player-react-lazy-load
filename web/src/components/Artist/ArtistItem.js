@@ -8,9 +8,8 @@ import {
 } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
-import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
-// import FolderIcon from 'material-ui-icons/Folder';
-import DeleteIcon from 'material-ui-icons/Delete';
+import MusicNoteIcon from 'material-ui-icons/MusicNote'
+import DeleteIcon from 'material-ui-icons/Delete'
 
 const ArtistItem = ({
   artist,
@@ -19,7 +18,7 @@ const ArtistItem = ({
   <ListItem button>
     <ListItemAvatar>
       <Avatar>
-        <LibraryMusicIcon />
+        <MusicNoteIcon />
       </Avatar>
     </ListItemAvatar>
     <ListItemText
