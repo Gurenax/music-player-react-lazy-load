@@ -7,6 +7,7 @@ const router = express.Router()
 // GET - Read all songs
 router.get('/songs', (req, res) => {
   Song.find()
+    .populate('artist','name')
     .then(songs => {
       res.json(songs)
     })
