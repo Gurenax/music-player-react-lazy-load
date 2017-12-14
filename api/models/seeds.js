@@ -57,6 +57,16 @@ Artist.create(
     )
       .then(song => {
         console.log('Created song', song)
+
+        Genre.create({
+          name: 'Pop'
+        })
+        .then(genre => {
+          console.log('Created genre', genre)
+        })
+        .catch(error => {
+          console.error('Error creating genre', error)
+        })
       })
       .catch(error => {
         console.error('Error creating song', error)
