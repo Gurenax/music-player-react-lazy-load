@@ -4,6 +4,7 @@ import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
 import { listArtists, addArtist, deleteArtist } from './api/artist'
 import { listSongs, addSong, deleteSong } from './api/song'
+import { listGenres, addGenre, deleteGenre } from './api/genre'
 
 import SignInForm from './components/SignInForm'
 import Error from './components/Error'
@@ -11,6 +12,7 @@ import ArtistList from './components/Artist/ArtistList'
 import ArtistForm from './components/Artist/ArtistForm'
 import SongList from './components/Song/SongList'
 import SongForm from './components/Song/SongForm'
+import GenreList from './components/Genre/GenreList'
 
 import AppBarTop from './components/AppBarTop'
 // import AppDrawer from './components/AppDrawer'
@@ -107,7 +109,6 @@ class App extends Component {
       .then(song => {
         this.setState(prevState => {
           const songs = prevState.songs.concat(song)
-          console.log(songs)
           return {
             songs,
             error: null
@@ -128,6 +129,40 @@ class App extends Component {
           })
           return {
             songs,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  onGenreSave = data => {
+    addGenre(data)
+      .then(genre => {
+        this.setState(prevState => {
+          const genres = prevState.genres.concat(genre)
+          return {
+            genres,
+            error: null
+          }
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  onGenreDelete = genreID => {
+    deleteGenre(genreID)
+      .then(genre => {
+        this.setState(prevState => {
+          const genres = prevState.genres.filter(theGenre => {
+            return theGenre._id !== genre._id
+          })
+          return {
+            genres,
             error: null
           }
         })
@@ -180,6 +215,13 @@ class App extends Component {
             onSongSave={this.onSongSave}
           />
         )}
+
+        {
+          <GenreList
+            genres={this.dataForSection('genres')}
+            onGenreDelete={this.onGenreDelete}
+          />
+        }
       </div>
     )
   }
@@ -192,6 +234,10 @@ class App extends Component {
     songs: {
       requireAuth: false,
       load: listSongs
+    },
+    genres: {
+      requireAuth: false,
+      load: listGenres
     }
   }
 
