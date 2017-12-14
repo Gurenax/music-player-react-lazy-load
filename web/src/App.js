@@ -13,6 +13,7 @@ import ArtistForm from './components/Artist/ArtistForm'
 import SongList from './components/Song/SongList'
 import SongForm from './components/Song/SongForm'
 import GenreList from './components/Genre/GenreList'
+import GenreForm from './components/Genre/GenreForm'
 
 import AppBarTop from './components/AppBarTop'
 // import AppDrawer from './components/AppDrawer'
@@ -222,6 +223,14 @@ class App extends Component {
             onGenreDelete={this.onGenreDelete}
           />
         }
+
+        {!!signedIn && (
+          <GenreForm
+            title="New Genre"
+            artists={this.dataForSection('genres')}
+            onGenreSave={this.onGenreSave}
+          />
+        )}
       </div>
     )
   }
