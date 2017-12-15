@@ -1,4 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom'
 import './App.css'
 import { signIn, signUp, signOutNow } from './api/auth'
 import { getDecodedToken } from './api/token'
@@ -178,60 +184,98 @@ class App extends Component {
     const signedIn = !!decodedToken
 
     return (
-      <div className="App">
-        <AppBarTop
-          title="Music Player"
-          signedIn={signedIn}
-          onSignOut={this.onSignOut}
-          leftDrawer={leftDrawer}
-          toggleDrawer={this.toggleDrawer}
-        />
+      <Router>
+        <div className="App">
+          <Route path='/' render={ () => (
+            <Fragment>
+              <AppBarTop
+                title="Music Player"
+                signedIn={signedIn}
+                onSignOut={this.onSignOut}
+                leftDrawer={leftDrawer}
+                toggleDrawer={this.toggleDrawer}
+              />
+              {!!error && <Error error={error} />}
+              {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
+            </Fragment>
+          )} />
 
-        {!!error && <Error error={error} />}
+          <Switch>
+            <Route path='/artists' exact render={ () => (
+              <Fragment>
+                {
+                  <ArtistList
+                    artists={this.dataForSection('artists')}
+                    onArtistDelete={this.onArtistDelete}
+                  />
+                }
+              </Fragment>
+            )} />
 
-        {!signedIn && <SignInForm onSignIn={this.onSignIn} />}
+            <Route path='/artists/new' exact render={ () => (
+              <Fragment>
+                {
+                  <ArtistForm title="New Artist" onArtistSave={this.onArtistSave} />
+                }
+              </Fragment>
+            )} />
+            
+            <Route path='/songs' exact render={ () => (
+              <Fragment>
+                {
+                  <SongList
+                    songs={this.dataForSection('songs')}
+                    onSongDelete={this.onSongDelete}
+                  />
+                }
+              </Fragment>
+            )} />
 
-        {
-          <ArtistList
-            artists={this.dataForSection('artists')}
-            onArtistDelete={this.onArtistDelete}
-          />
-        }
+            <Route path='/songs/new' exact render={ () => (
+              <Fragment>
+                {
+                  <SongForm
+                    title="New Song"
+                    artists={this.dataForSection('artists')}
+                    onSongSave={this.onSongSave}
+                  />
+                }
+              </Fragment>
+            )} />
 
-        {!!signedIn && (
-          <ArtistForm title="New Artist" onArtistSave={this.onArtistSave} />
-        )}
+            <Route path='/genres' exact render={ () => (
+              <Fragment>
+                {
+                  <GenreList
+                    genres={this.dataForSection('genres')}
+                    onGenreDelete={this.onGenreDelete}
+                  />
+                }
+              </Fragment>
+            )} />
 
-        {
-          <SongList
-            songs={this.dataForSection('songs')}
-            onSongDelete={this.onSongDelete}
-          />
-        }
+            <Route path='/genres/new' exact render={ () => (
+              <Fragment>
+                {
+                  <GenreForm
+                    title="New Genre"
+                    artists={this.dataForSection('genres')}
+                    onGenreSave={this.onGenreSave}
+                  />
+                }
+              </Fragment>
+            )} />
 
-        {!!signedIn && (
-          <SongForm
-            title="New Song"
-            artists={this.dataForSection('artists')}
-            onSongSave={this.onSongSave}
-          />
-        )}
+            <Route render={({ location }) => (
+                location.pathname !== '/' && (
+                  <h2>Page not Found: {location.pathname}</h2>
+                )
+              )}
+            />
+          </Switch>
 
-        {
-          <GenreList
-            genres={this.dataForSection('genres')}
-            onGenreDelete={this.onGenreDelete}
-          />
-        }
-
-        {!!signedIn && (
-          <GenreForm
-            title="New Genre"
-            artists={this.dataForSection('genres')}
-            onGenreSave={this.onGenreSave}
-          />
-        )}
-      </div>
+        </div>
+      </Router>
     )
   }
 
