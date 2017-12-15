@@ -5,15 +5,18 @@ import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
 // import Grid from 'material-ui/Grid';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
     textAlign: 'center'
   },
   field: {
     minWidth: '300px'
+  },
+  button: {
+    margin: theme.spacing.unit,
   }
-}
+})
 
 const SignInForm = ({ 
   classes,
@@ -51,8 +54,11 @@ const SignInForm = ({
           margin="normal"
           className={classes.field}
         /><br/>
-        <Button type="submit" raised color="primary">
+        <Button type="submit" raised color="primary" className={classes.button}>
           Sign In
+        </Button>
+        <Button type="button" raised color="primary" className={classes.button}>
+          Sign Up
         </Button>
       </form>
     </div>

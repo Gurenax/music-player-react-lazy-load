@@ -47,9 +47,13 @@ const AppBarTop = ({
           <Typography type="title" color="inherit" className={classes.flex}>
             {title}
           </Typography>
-          {signedIn && (
+          {signedIn ? (
             <Button color="contrast" onClick={onSignOut}>
               Sign Out
+            </Button>
+          ) : (
+            <Button color="contrast">
+              Sign In
             </Button>
           )}
         </Toolbar>

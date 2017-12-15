@@ -10,6 +10,9 @@ export const signIn = data => {
       // Converts token back to a human readable JSON
       return getDecodedToken()
     })
+    .catch(error => {
+      throw error
+    })
 }
 
 export const signOutNow = () => {
