@@ -2,14 +2,12 @@ const Artist = require('./Artist')
 const Song = require('./Song')
 const Genre = require('./Genre')
 
-Artist.deleteMany().then(() => {
-  console.log('Deleted artists')
-})
-
-Song.deleteMany().then(() => {
-  console.log('Deleted songs')
-})
-
-Genre.deleteMany().then(() => {
-  console.log('Deleted genre')
+Promise.all([
+  Artist.deleteMany(),
+  Song.deleteMany(),
+  Genre.deleteMany()
+])
+.then ( () => {
+  console.log('Artist, Song, Genre deleted')
+  process.exit()
 })
