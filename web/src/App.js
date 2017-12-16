@@ -106,6 +106,9 @@ class App extends Component {
           }
         })
       })
+      .then( () => {
+        this.eagerLoad('songs')
+      })
       .catch(error => {
         this.setState({ error })
       })
@@ -300,6 +303,7 @@ class App extends Component {
     }
   }
 
+  // Lazy loads a secion
   loadSection(section) {
     const { pending, requireAuth, load } = this.sections[section]
     // If already loading
@@ -333,12 +337,28 @@ class App extends Component {
       })
   }
 
+  // Function to be passed on prop to trigger lazy loading of section
   dataForSection(section) {
     this.loadSection(section)
     return this.state[section]
   }
 
-  componentDidUpdate() {}
+  // Eager loads a section
+  eagerLoad(section) {
+    const { load } = this.sections[section]
+
+    load()
+      .then(data => {
+        this.setState({
+          [section]: data
+        })
+      })
+      .catch(error => {
+        this.setState({
+          error
+        })
+      })
+  }
 }
 
 export default App
