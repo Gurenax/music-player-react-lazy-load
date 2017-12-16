@@ -1,5 +1,6 @@
 const express = require('express')
 const Song = require('../models/Song')
+const Artist = require('../models/Artist')
 const authMiddleware = require('../middleware/auth')
 
 const router = express.Router()
@@ -35,12 +36,23 @@ router.get('/songs/:id', (req, res) => {
 // POST - Create a new song document
 router.post('/songs', authMiddleware.requireJWT, (req, res) => {
   const attributes = req.body
+  // Create the Song
   Song.create(attributes)
     .then(song => {
-      Song.findOne(song)
-      .populate('artist','name')
-      .then(song => {
-        res.status(201).json(song)
+      // Then, add thr song to artist.songs
+      Artist.updateOne(
+        { _id: song.artist },
+        { $addToSet : { songs: song._id } }
+      )
+      .then( () => {
+        Song.findOne(song)
+        .populate('artist','name')
+        .then(song => {
+          res.status(201).json(song)
+        })
+        .catch(error => {
+          res.status(400).json({ error: error })
+        })
       })
       .catch(error => {
         res.status(400).json({ error: error })
