@@ -18,7 +18,7 @@ const styles = theme => ({
   }
 })
 
-const ArtistForm = ({ classes, title, onArtistSave }) => {
+const ArtistForm = ({ classes, title, artists, onArtistSave }) => {
   return (
     // <div className={classes.root}>
     <Card className={classes.card}>

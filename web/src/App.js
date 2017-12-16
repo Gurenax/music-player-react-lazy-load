@@ -116,6 +116,7 @@ class App extends Component {
       .then(song => {
         this.setState(prevState => {
           const songs = prevState.songs.concat(song)
+          songs.concat(song)
           return {
             songs,
             error: null
@@ -215,7 +216,11 @@ class App extends Component {
             <Route path='/artists/new' exact render={ () => (
               <Fragment>
                 {
-                  <ArtistForm title="New Artist" onArtistSave={this.onArtistSave} />
+                  <ArtistForm
+                    title="New Artist"
+                    artists={this.dataForSection('artists')} // Pass list to be updated
+                    onArtistSave={this.onArtistSave}
+                  />
                 }
               </Fragment>
             )} />
@@ -237,6 +242,7 @@ class App extends Component {
                   <SongForm
                     title="New Song"
                     artists={this.dataForSection('artists')}
+                    songs={this.dataForSection('songs')} // Pass list to be updated
                     onSongSave={this.onSongSave}
                   />
                 }
@@ -259,7 +265,7 @@ class App extends Component {
                 {
                   <GenreForm
                     title="New Genre"
-                    artists={this.dataForSection('genres')}
+                    genres={this.dataForSection('genres')} // Pass list to be updated
                     onGenreSave={this.onGenreSave}
                   />
                 }

@@ -27,6 +27,7 @@ const SongForm = ({
   classes,
   title,
   artists,
+  songs,
   onSongSave
 }) => {
   return (

@@ -18,7 +18,7 @@ const styles = theme => ({
   }
 })
 
-const GenreForm = ({ classes, title, onGenreSave }) => {
+const GenreForm = ({ classes, title, genres, onGenreSave }) => {
   return (
     <Card className={classes.card}>
       <CardContent>
