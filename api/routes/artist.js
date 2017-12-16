@@ -1,5 +1,6 @@
 const express = require('express')
 const Artist = require('../models/Artist')
+const Song = require('../models/Song')
 const authMiddleware = require('../middleware/auth')
 
 const router = express.Router()
@@ -63,7 +64,13 @@ router.patch('/artists/:id', authMiddleware.requireJWT, (req, res) => {
 // DELETE - Destroy a artist document
 router.delete('/artists/:id', authMiddleware.requireJWT, (req, res) => {
   const id = req.params.id
-  Artist.findByIdAndRemove(id)
+  // First, delete the songs of that artist
+  Song.remove(
+    { artist : id }
+  )
+  .then( song => {
+    // Then, delete the artist
+    Artist.findByIdAndRemove(id)
     .then(artist => {
       if (artist) {
         res.status(200).json(artist)
@@ -74,6 +81,10 @@ router.delete('/artists/:id', authMiddleware.requireJWT, (req, res) => {
     .catch(error => {
       res.status(400).json({ error: error })
     })
+  })
+  .catch(error => {
+    res.status(400).json({ error: error })
+  })
 })
 
 module.exports = router
